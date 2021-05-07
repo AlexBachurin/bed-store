@@ -1,0 +1,68 @@
+{
+    "items": [
+      {
+        "sys": { "id": "1" },
+        "fields": {
+          "title": "queen panel bed",
+          "price": 10.99,
+          "image": { "fields": { "file": { "url": "https://res.cloudinary.com/dljezd6qv/image/upload/v1620395388/bed-store/product-1_fqvfrr.jpg" } } }
+        }
+      },
+      {
+        "sys": { "id": "2" },
+        "fields": {
+          "title": "king panel bed",
+          "price": 12.99,
+          "image": { "fields": { "file": { "url": "https://res.cloudinary.com/dljezd6qv/image/upload/v1620395390/bed-store/product-2_swnxxv.jpg" } } }
+        }
+      },
+      {
+        "sys": { "id": "3" },
+        "fields": {
+          "title": "single panel bed",
+          "price": 12.99,
+          "image": { "fields": { "file": { "url": "https://res.cloudinary.com/dljezd6qv/image/upload/v1620395392/bed-store/product-3_uztg6m.jpg" } } }
+        }
+      },
+      {
+        "sys": { "id": "4" },
+        "fields": {
+          "title": "twin panel bed",
+          "price": 22.99,
+          "image": { "fields": { "file": { "url": "https://res.cloudinary.com/dljezd6qv/image/upload/v1620395394/bed-store/product-4_batfut.jpg" } } }
+        }
+      },
+      {
+        "sys": { "id": "5" },
+        "fields": {
+          "title": "fridge",
+          "price": 88.99,
+          "image": { "fields": { "file": { "url": "https://res.cloudinary.com/dljezd6qv/image/upload/v1620395396/bed-store/product-5_lun08u.jpg" } } }
+        }
+      },
+      {
+        "sys": { "id": "6" },
+        "fields": {
+          "title": "dresser",
+          "price": 32.99,
+          "image": { "fields": { "file": { "url": "https://res.cloudinary.com/dljezd6qv/image/upload/v1620395398/bed-store/product-6_zomr3k.jpg" } } }
+        }
+      },
+      {
+        "sys": { "id": "7" },
+        "fields": {
+          "title": "couch",
+          "price": 45.99,
+          "image": { "fields": { "file": { "url": "https://res.cloudinary.com/dljezd6qv/image/upload/v1620395400/bed-store/product-7_wgqfe2.jpg" } } }
+        }
+      },
+      {
+        "sys": { "id": "8" },
+        "fields": {
+          "title": "table",
+          "price": 33.99,
+          "image": { "fields": { "file": { "url": "https://res.cloudinary.com/dljezd6qv/image/upload/v1620395401/bed-store/product-8_jy67ud.jpg" } } }
+        }
+      }
+    ]
+  }
