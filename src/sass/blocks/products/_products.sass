@@ -1,0 +1,64 @@
+.products
+    display: grid
+    place-items: center
+    padding-top: 3rem
+    &__title
+        text-align: center
+        font-size: 2.5rem
+        font-weight: 700
+        letter-spacing: var(--spacing)
+    &-container
+        display: grid
+        grid-template-columns: repeat( auto-fit , minmax(320px, 370px) )
+        grid-gap: 20px
+        margin-top: 3rem
+        grid-row-gap: 2rem
+    &__item
+        position: relative
+        //hide add to cart button
+        overflow: hidden
+        text-align: center
+        &-title
+            margin-top: 1rem
+            margin-bottom: 0.75rem
+            font-size: 1.1rem
+            letter-spacing: var(--spacing)
+            text-transform: capitalize
+            color: #585858
+            font-weight: 500
+        &-price
+            color: #00CED1
+            font-size: 1.35rem
+        &-imgContainer
+            // height: 13rem
+            width: 100%
+            
+        &-img
+            width: 100%
+            display: block
+            object-fit: cover
+            background-color: var(--primary)
+        &-add
+            position: absolute
+            top: 50%
+            transform: translateY(-50%)
+            right: 0
+            background-color: var(--primary)
+            display: flex
+            justify-content: space-between
+            border: none
+            color: #fff
+            padding: 0.5rem 0.75rem
+            cursor: pointer
+            transform: translateX(100%)
+            transition: var(--transition)
+            & i
+                margin-right: 8px
+
+//move button on hover
+.hovered
+    transform: translateX(0)
+
+//overlay to img
+// .overlay
+//     background-color: rgba(240, 157, 81, 0.6)
