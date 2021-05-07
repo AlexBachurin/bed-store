@@ -9,7 +9,7 @@
         letter-spacing: var(--spacing)
     &-container
         display: grid
-        grid-template-columns: repeat( auto-fit , minmax(320px, 370px) )
+        grid-template-columns: repeat( auto-fit , minmax(370px, 1fr) )
         grid-gap: 20px
         margin-top: 3rem
         grid-row-gap: 2rem
@@ -18,6 +18,12 @@
         //hide add to cart button
         overflow: hidden
         text-align: center
+        //hover functionality
+        &:hover
+            & .products__item-img
+                opacity: 0.5
+            & .products__item-add
+                transform: translateX(0)
         &-title
             margin-top: 1rem
             margin-bottom: 0.75rem
@@ -54,11 +60,6 @@
             transition: var(--transition)
             & i
                 margin-right: 8px
+            &:hover
+                color: var(--black)
 
-//move button on hover
-.hovered
-    transform: translateX(0)
-
-//overlay to img
-// .overlay
-//     background-color: rgba(240, 157, 81, 0.6)
