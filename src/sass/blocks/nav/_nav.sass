@@ -7,6 +7,24 @@
     align-items: center
     background: rgb(231,226,221)
     z-index: 1
+    &__cart
+        position: relative
+        cursor: pointer
+        &-icon
+            color: var(--black)
+        &-amount
+            position: absolute
+            top: -14px
+            right: -8px
+            color: var(--white)
+            font-weight: 700
+            background-color: var(--primary)
+            width: 20px
+            height: 20px
+            display: grid
+            place-items: center
+            text-align: center
+            border-radius: 30%
     &__toggle
         border: none
         outline: none
