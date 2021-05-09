@@ -1,0 +1,95 @@
+.cart
+    background-color: var(--grey)
+    position: absolute
+    top: 0
+    right: 0
+    width: 30vw
+    height: 100%
+    padding: 50px 20px
+    &__close
+        position: absolute
+        top: 15px
+        left: 15px
+        cursor: pointer
+        & i
+            background-color: #fff
+            color: var(--black)
+            font-size: 25px
+
+    &__title
+        font-size: 28px
+        text-align: center
+        text-transform: capitalize
+        font-weight: 700
+    &__content
+        margin-top: 20px
+        padding: 0 30px
+        display: flex
+        flex-direction: column
+        gap: 30px
+    &__item
+        display: flex
+        justify-content: space-between
+        align-items: center
+        &-content
+            display: flex
+        &-imgContainer
+            width: 150px
+            // height: 150px
+            margin-right: 20px
+        &-img
+            width: 100%
+            height: auto
+            object-fit: cover
+        &-descr
+            display: grid
+            grid-template-columns: 1fr
+            grid-template-rows: 21px
+            grid-auto-rows: 21px
+            grid-row-gap: 10px
+        &-counter
+            display: flex
+            flex-direction: column
+            justify-content: center
+            align-items: center
+            padding-bottom: 20px
+        &-amount
+            text-align: center
+            padding-right: 2px
+        &-btn 
+            color: var(--primary)   
+            cursor: pointer   
+        &-remove
+            padding: 0
+            font-size: 1rem
+            border: none
+            cursor: pointer
+            color: rgba(220, 20, 60, 0.6)
+            transition: var(--transition)
+            &:hover
+                color: rgba(220, 20, 60, 1)
+    &__footer
+        text-align: center
+        font-size: 1.3rem
+        font-weight: 700
+        text-transform: capitalize
+        letter-spacing: var(--spacing) 
+    &__clearBtn
+        margin-top: 20px
+        transition: var(--transition)
+        &:hover
+              background-color: red
+              color: var(--black)
+
+
+    &-overlay
+        position: fixed
+        height: 100%
+        width: 100%
+        top: 0
+        right: 0
+        background: rgba(240, 157, 81, 0.5)
+        transition: var(--transition)
+        z-index: 2
+        visibility: hidden
+        transform: translateX(100%)
