@@ -96,7 +96,9 @@ class UI {
                         amount: 1
                     }
                     //clear empty message
-                    document.querySelector('.cart__empty').remove();
+                    if (cart.length === 0) {
+                        document.querySelector('.cart__empty').remove();
+                    }
                     
                     //add product to the cart
                     cart.push(cartItem);
