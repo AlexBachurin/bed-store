@@ -90,7 +90,11 @@ class UI {
                     //get product from local storage             
                     let product = Storage.getProduct(id);
                     //use spread to setup new cartItem
-                    let cartItem = {...product, amount: 1}
+                    let cartItem = {
+                        ...product,
+                        amount: 1
+                    }
+                    
                     //add product to the cart
                     cart.push(cartItem);
                     //save cart in local storage
@@ -100,7 +104,7 @@ class UI {
                     //display cart item
                     this.addCartItem(cartItem);
                     //show cart
-                    cartOverlay.classList.add('show-cart');                  
+                    this.showCart();
                 })
             }
 
@@ -140,7 +144,34 @@ class UI {
             <i class="cart__item-btn cart__item-btn_sub fas fa-chevron-down" data-id=${item.id}></i>
         </div>`
         cartItem.classList.add('cart__item');
-        cartContent.insertAdjacentElement("afterbegin",cartItem)
+        cartContent.insertAdjacentElement("afterbegin", cartItem)
+    }
+    //show cart
+    showCart() {
+        cartOverlay.classList.add('show-cart');
+    }
+    //Setup APP
+    setupApp() {
+        //check cart
+        cart = Storage.getCartItems();
+        //if we have items in cart storage
+        //place html inside cart + set values
+        if (cart.length > 0) {
+            cart.forEach(item => {
+                this.addCartItem(item);
+            })
+            this.setCartValues(cart);
+        } else {
+            // cartContent.innerHTML = `<h1 class ="cart__empty">u haven't added any items to cart yet</h1>`
+        }
+        //close cart
+        closeCartBtn.addEventListener('click', () => {
+            cartOverlay.classList.remove('show-cart');
+        })
+        //open cart
+        cartBtn.addEventListener('click', () => {
+            this.showCart();
+        })
     }
 }
 
@@ -155,7 +186,7 @@ class Storage {
     static getProduct(id) {
         let products = JSON.parse(localStorage.getItem('products'))
         let product = products.find(item => item.id === id);
-        return product; 
+        return product;
     }
     //save items to cart
     static saveCart(cartArr) {
@@ -163,7 +194,7 @@ class Storage {
     }
     // get items from cart
     static getCartItems() {
-        let cartItems = JSON.parse(localStorage.getItem('cart'));
+        let cartItems = JSON.parse(localStorage.getItem('cart')) ? JSON.parse(localStorage.getItem('cart')) : [];
         return cartItems;
     }
 }
@@ -172,6 +203,8 @@ class Storage {
 window.addEventListener('DOMContentLoaded', () => {
     const ui = new UI();
     const products = new Products();
+    //setup page 
+    ui.setupApp();
 
     //get products
     products.getProducts('products.json').then(
@@ -185,12 +218,5 @@ window.addEventListener('DOMContentLoaded', () => {
     })
 
 
-    //close cart
-    closeCartBtn.addEventListener('click', () => {
-        cartOverlay.classList.remove('show-cart');
-    })
-    //open cart
-    cartBtn.addEventListener('click', () => {
-        cartOverlay.classList.add('show-cart');
-    })
+
 })
