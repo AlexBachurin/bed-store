@@ -135,9 +135,9 @@ class UI {
             </div>
         </div>
         <div class="cart__item-counter">
-            <i class="cart__item-btn cart__item-btn_add fas fa-chevron-up"></i>
+            <i class="cart__item-btn cart__item-btn_add fas fa-chevron-up" data-id=${item.id}></i>
             <span class="cart__item-amount">${item.amount}</span>
-            <i class="cart__item-btn cart__item-btn_sub fas fa-chevron-down"></i>
+            <i class="cart__item-btn cart__item-btn_sub fas fa-chevron-down" data-id=${item.id}></i>
         </div>`
         cartItem.classList.add('cart__item');
         cartContent.insertAdjacentElement("afterbegin",cartItem)
