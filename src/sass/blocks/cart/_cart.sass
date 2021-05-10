@@ -22,7 +22,7 @@
         text-transform: capitalize
         font-weight: 700
     &__content
-        margin-top: 20px
+        margin-top: 50px
         padding: 0 30px
         display: flex
         flex-direction: column
@@ -31,6 +31,10 @@
         display: flex
         justify-content: space-between
         align-items: center
+        &-title
+            text-transform: capitalize
+        &-price
+            color: var(--primary)
         &-content
             display: flex
         &-imgContainer
@@ -66,6 +70,7 @@
             cursor: pointer
             color: rgba(220, 20, 60, 0.6)
             transition: var(--transition)
+            text-align: left
             &:hover
                 color: rgba(220, 20, 60, 1)
     &__footer
