@@ -154,6 +154,12 @@ class UI {
     //show cart
     showCart() {
         cartOverlay.classList.add('show-cart');
+        document.body.style.overflow = 'hidden';
+    }
+    //close cart
+    closeCart() {
+        cartOverlay.classList.remove('show-cart');
+        document.body.style.overflow = '';
     }
     //Setup APP
     setupApp() {
@@ -175,7 +181,7 @@ class UI {
         }
         //close cart
         closeCartBtn.addEventListener('click', () => {
-            cartOverlay.classList.remove('show-cart');
+            this.closeCart();
         })
         //open cart
         cartBtn.addEventListener('click', () => {
