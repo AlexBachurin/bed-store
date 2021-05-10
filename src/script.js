@@ -131,7 +131,7 @@ class UI {
             <div class="cart__item-descr">
                 <h4 class="cart__item-title">${item.title}</h4>
                 <div class="cart__item-price">$${item.price}</div>
-                <button class="cart__item-remove">remove</button>
+                <button class="cart__item-remove" data-id=${item.id}>remove</button>
             </div>
         </div>
         <div class="cart__item-counter">
