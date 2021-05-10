@@ -6,6 +6,7 @@ const cartBtn = document.querySelector('.nav__cart'),
     cartDOM = document.querySelector('.cart'),
     cartOverlay = document.querySelector('.cart-overlay'),
     cartContent = document.querySelector('.cart__content'),
+    cartContentWrapper = document.querySelector('.cart__content-wrapper'),
     cartItemsAmount = document.querySelector('.nav__cart-amount'),
     cartTotalPrice = document.querySelector('.cart-total'),
     productsContent = document.querySelector('.products-container');
@@ -99,7 +100,7 @@ class UI {
                     if (cart.length === 0) {
                         document.querySelector('.cart__empty').remove();
                     }
-                    
+
                     //add product to the cart
                     cart.push(cartItem);
                     //save cart in local storage
@@ -161,6 +162,13 @@ class UI {
         cartOverlay.classList.remove('show-cart');
         document.body.style.overflow = '';
     }
+    //empty cart placeholder
+    emptyCartPlaceholder() {
+        const empty = document.createElement('h2');
+        empty.innerHTML = `You haven't added any items to cart yet`
+        empty.classList.add('cart__empty');
+        cartContent.insertAdjacentElement('afterbegin', empty);
+    }
     //Setup APP
     setupApp() {
         //check cart
@@ -174,10 +182,8 @@ class UI {
             this.setCartValues(cart);
         } else {
             //empty cart placeholder
-            const empty  = document.createElement('h2');
-            empty.innerHTML = `You haven't added any items to cart yet`
-            empty.classList.add('cart__empty');
-            cartContent.insertAdjacentElement('afterbegin', empty)
+            this.emptyCartPlaceholder();
+
         }
         //close cart
         closeCartBtn.addEventListener('click', () => {
@@ -186,6 +192,22 @@ class UI {
         //open cart
         cartBtn.addEventListener('click', () => {
             this.showCart();
+        })
+    }
+
+    // **** CART FUNCTIONALITY ****
+    cartFunctionality() {
+        clearCartBtn.addEventListener('click', () => {
+            cartContent.innerHTML = '';
+            cart = [];
+            localStorage.removeItem('cart');
+            this.setCartValues(cart);
+            this.emptyCartPlaceholder();
+            const btns = document.querySelectorAll('.products__item-add');
+            btns.forEach(btn => {
+                btn.textContent = 'add to cart';
+                btn.disabled = false;
+            })
         })
     }
 }
@@ -230,6 +252,7 @@ window.addEventListener('DOMContentLoaded', () => {
         //once we get products we setting up function for buttons
     ).then(() => {
         ui.getAddToCartButtons();
+        ui.cartFunctionality();
     })
 
 
