@@ -14,6 +14,8 @@ const cartBtn = document.querySelector('.nav__cart'),
 // main info for cart
 let cart = [];
 
+//placeholder for buttons
+let addToCartButtons = [];
 
 //getting products
 class Products {
@@ -74,6 +76,8 @@ class UI {
     //add to cart buttons
     getAddToCartButtons() {
         const btns = document.querySelectorAll('.products__item-add');
+        //add btns to placeholder, transform it into normal array using spread
+        addToCartButtons = [...btns]
         btns.forEach(btn => {
             //get button id
             const id = btn.getAttribute('data-id');
@@ -197,18 +201,64 @@ class UI {
 
     // **** CART FUNCTIONALITY ****
     cartFunctionality() {
+        //clear cart
         clearCartBtn.addEventListener('click', () => {
-            cartContent.innerHTML = '';
-            cart = [];
-            localStorage.removeItem('cart');
-            this.setCartValues(cart);
-            this.emptyCartPlaceholder();
-            const btns = document.querySelectorAll('.products__item-add');
-            btns.forEach(btn => {
-                btn.textContent = 'add to cart';
-                btn.disabled = false;
-            })
+            this.clearCart();
         })
+        cartContent.addEventListener('click', (e) => {
+            const target = e.target;
+            if (target.classList.contains('cart__item-remove')) {
+                const id = target.dataset.id;
+                this.removeItem(id);
+            }
+        })
+    }
+    clearCart() {
+        //clear html content
+        cartContent.innerHTML = '';
+        cart = [];
+        //remove cart from storage
+        localStorage.removeItem('cart');
+        //update values
+        this.setCartValues(cart);
+        //place placeholder
+        this.emptyCartPlaceholder();
+        //revert all buttons to initial state
+        addToCartButtons.forEach(btn => {
+            btn.textContent = 'add to cart';
+            btn.disabled = false;
+        })
+        //close cart
+        this.closeCart();
+    }
+    //remove item
+    removeItem(id) {
+        //get all cart items but item which id we wanna remove
+        cart = cart.filter(item => item.id !== id);
+        //update localstorage
+        Storage.saveCart(cart);
+        //update html in cart
+        cartContent.innerHTML = '';
+        cart.forEach(item => {
+            this.addCartItem(item);
+        })
+        //update prices
+        this.setCartValues(cart);
+        //if last element deleted place placeholder and close cart
+        if (cart.length === 0) {
+            this.emptyCartPlaceholder();
+            this.closeCart();
+        }
+        //remove target button disabled button state
+        const button = this.getTargetButton(id);
+        button.disabled = false;
+        button.textContent = "add to cart";
+    }
+    //get matching button
+    getTargetButton(id) {
+        //find button by matching data attribute id
+        const targetBtn = addToCartButtons.find(item => item.dataset.id === id);
+        return targetBtn;
     }
 }
 
