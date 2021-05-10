@@ -13,6 +13,7 @@ const cartBtn = document.querySelector('.nav__cart'),
 // main info for cart
 let cart = [];
 
+
 //getting products
 class Products {
     async getProducts(url) {
@@ -94,6 +95,8 @@ class UI {
                         ...product,
                         amount: 1
                     }
+                    //clear empty message
+                    document.querySelector('.cart__empty').remove();
                     
                     //add product to the cart
                     cart.push(cartItem);
@@ -162,7 +165,11 @@ class UI {
             })
             this.setCartValues(cart);
         } else {
-            // cartContent.innerHTML = `<h1 class ="cart__empty">u haven't added any items to cart yet</h1>`
+            //empty cart placeholder
+            const empty  = document.createElement('h2');
+            empty.innerHTML = `You haven't added any items to cart yet`
+            empty.classList.add('cart__empty');
+            cartContent.insertAdjacentElement('afterbegin', empty)
         }
         //close cart
         closeCartBtn.addEventListener('click', () => {
