@@ -38,6 +38,7 @@ class Products {
 
 // display content
 class UI {
+    //display products
     displayProducts(products) {
         let result = '';
         products.forEach(({title, price, id, image}) => {
@@ -62,7 +63,11 @@ class UI {
 
 //local storage
 class Storage {
-
+    //static method, we can use without instantiating class exemplar
+    static saveProducts(products) {
+        //dont forget to json stringify
+        localStorage.setItem('products', JSON.stringify(products));
+    }
 }
 
 
@@ -72,6 +77,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
     //get products
     products.getProducts('products.json').then(
-        (data) => ui.displayProducts(data)
+        (data) => {
+            ui.displayProducts(data);
+            Storage.saveProducts(data);
+        }
     )
 })
