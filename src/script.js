@@ -64,6 +64,9 @@ class UI {
                 <i class="fas fa-shopping-cart"></i>
                 add to cart
             </button>
+            <button class="products__item-more" data-id = "${id}">
+                <i class="fas fa-lg fa-search-plus"></i>
+            </button>
             <h3 class="products__item-title">
                 ${title}
             </h3>

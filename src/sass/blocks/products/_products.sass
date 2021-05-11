@@ -25,6 +25,8 @@
                 opacity: 0.5
             & .products__item-add
                 transform: translateX(0)
+            & .products__item-more
+                display: grid
         &-title
             margin-top: 1rem
             margin-bottom: 0.75rem
@@ -63,4 +65,22 @@
                 margin-right: 8px
             &:hover
                 color: var(--black)
+        &-more
+            position: absolute
+            top: 40%
+            left: 50%
+            transform: translate(-40%,-50%)
+            background-color: var(--primary)
+            border-radius: 50%
+            color: #fff
+            outline: none
+            border: none
+            place-items: center
+            width: 30px
+            height: 30px
+            transition: var(--transition)
+            cursor: pointer
+            display: none
+            &:hover
+                background-color: #B27300
 
