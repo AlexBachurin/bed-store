@@ -337,6 +337,13 @@ class UI {
     fillPopupContent(id) {
         //get item by id
         const item = Storage.getProduct(id);
+        //filler text , change if item is in cart already
+        let text = 'Add to cart';
+        //if item with this index is in cart, we change text of button to 'In Cart'
+        let inCart = cart.find(item => item.id === id);
+        if (inCart) {
+            text = 'In cart';
+        }
         popupContent.innerHTML = ` <button class="popup__close">
         <i class="fas fa-2x fa-times"></i>
     </button>
@@ -359,7 +366,7 @@ class UI {
             iPhone taiyaki trust fund hashtag kinfolk microdosing gochujang live-edge
         </div>
         <button class="btn popup__btn" data-id ="${item.id}">
-            add to cart
+            ${text}
         </button>
     </div>`
     }
@@ -396,6 +403,7 @@ class UI {
                 const id = target.dataset.id;
                 //get item by this id
                 const item = Storage.getProduct(id);
+                //if item is already in cart, we wont add to cart any more items
                 let inCart = cart.find(item => item.id === id);
                 if (inCart) {
 
@@ -450,6 +458,8 @@ class Storage {
         return cartItems;
     }
 }
+
+
 
 
 window.addEventListener('DOMContentLoaded', () => {
