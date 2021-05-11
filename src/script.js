@@ -131,7 +131,7 @@ class UI {
         //amount of items in cart on nav
         cartItemsAmount.textContent = Number(itemsTotal);
         //total price of all items in cart
-        cartTotalPrice.textContent = Number(tempTotal).toFixed(2);
+        cartTotalPrice.textContent = `${Number(tempTotal).toFixed(2)}$`;
     }
     //add item to cart html
     addCartItem(item) {
@@ -197,6 +197,13 @@ class UI {
         cartBtn.addEventListener('click', () => {
             this.showCart();
         })
+        //close cart on outside click
+        cartOverlay.addEventListener('click', (e) => {
+            console.log(e.target)
+            if (e.target.classList.contains('cart-overlay')) {
+                this.closeCart();
+            }
+        })
     }
 
     // **** CART FUNCTIONALITY ****
@@ -205,6 +212,7 @@ class UI {
         clearCartBtn.addEventListener('click', () => {
             this.clearCart();
         })
+        //use event bubbling
         cartContent.addEventListener('click', (e) => {
             const target = e.target;
             if (target.classList.contains('cart__item-remove')) {
@@ -217,8 +225,8 @@ class UI {
         //clear html content
         cartContent.innerHTML = '';
         cart = [];
-        //remove cart from storage
-        localStorage.removeItem('cart');
+        //clear cart in storage
+        Storage.saveCart(cart);
         //update values
         this.setCartValues(cart);
         //place placeholder
@@ -258,6 +266,7 @@ class UI {
     getTargetButton(id) {
         //find button by matching data attribute id
         const targetBtn = addToCartButtons.find(item => item.dataset.id === id);
+        console.log(targetBtn)
         return targetBtn;
     }
 }
