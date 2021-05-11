@@ -62,7 +62,7 @@ class UI {
             </div>
             <button class="products__item-add" data-id = "${id}">
                 <i class="fas fa-shopping-cart"></i>
-                add to bag
+                add to cart
             </button>
             <h3 class="products__item-title">
                 ${title}
@@ -78,7 +78,7 @@ class UI {
         const btns = document.querySelectorAll('.products__item-add');
         //add btns to placeholder, transform it into normal array using spread
         addToCartButtons = [...btns]
-        btns.forEach(btn => {
+        addToCartButtons.forEach(btn => {
             //get button id
             const id = btn.getAttribute('data-id');
             //check if item with this id in cart for each button
@@ -91,6 +91,7 @@ class UI {
             } else {
                 btn.addEventListener('click', (e) => {
                     const target = e.currentTarget;
+                    console.log(target)
                     target.textContent = "In Cart";
                     target.disabled = true;
                     //get product from local storage             
@@ -215,11 +216,46 @@ class UI {
         //use event bubbling
         cartContent.addEventListener('click', (e) => {
             const target = e.target;
+            const id = target.dataset.id;
+            //remove item
             if (target.classList.contains('cart__item-remove')) {
-                const id = target.dataset.id;
                 this.removeItem(id);
             }
+            //***AMOUNT **** manipulations
+            else if (target.classList.contains('cart__item-btn_add')) {
+
+                let cartItem = cart.find(item => item.id === id);
+                let amount = cartItem.amount;
+                amount++;
+                this.changeAmount(id, amount);
+                //show in html
+                target.nextElementSibling.textContent = amount;               
+            } else if (target.classList.contains('cart__item-btn_sub')) {
+                //find matching item and get its current amount
+                let cartItem = cart.find(item => item.id === id);
+                let amount = cartItem.amount;
+                if (amount != 1) {
+                    amount--;
+                    this.changeAmount(id, amount);
+                    //show in html
+                    target.previousElementSibling.textContent = amount;
+                }
+            }
         })
+    }
+    //change item amount
+    changeAmount(id,amount) {
+        //find matching item in cart and change its amount
+        cart = cart.map(item => {
+            if (item.id === id) {
+                item.amount = amount;
+            }
+            return item;
+        })
+        //save new values
+        Storage.saveCart(cart);
+        //calculate new price
+        this.setCartValues(cart)
     }
     clearCart() {
         //clear html content
@@ -233,7 +269,8 @@ class UI {
         this.emptyCartPlaceholder();
         //revert all buttons to initial state
         addToCartButtons.forEach(btn => {
-            btn.textContent = 'add to cart';
+            btn.innerHTML = ` <i class="fas fa-shopping-cart"></i>
+            add to cart`;
             btn.disabled = false;
         })
         //close cart
@@ -260,7 +297,8 @@ class UI {
         //remove target button disabled button state
         const button = this.getTargetButton(id);
         button.disabled = false;
-        button.textContent = "add to cart";
+        button.innerHTML= ` <i class="fas fa-shopping-cart"></i>
+        add to cart`;
     }
     //get matching button
     getTargetButton(id) {
