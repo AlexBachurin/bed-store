@@ -9,7 +9,9 @@ const cartBtn = document.querySelector('.nav__cart'),
     cartContentWrapper = document.querySelector('.cart__content-wrapper'),
     cartItemsAmount = document.querySelector('.nav__cart-amount'),
     cartTotalPrice = document.querySelector('.cart-total'),
-    productsContent = document.querySelector('.products-container');
+    productsContent = document.querySelector('.products-container'),
+    popup = document.querySelector('.popup'),
+    popupContent = document.querySelector('.popup__content');
 
 // main info for cart
 let cart = [];
@@ -314,6 +316,53 @@ class UI {
         console.log(targetBtn)
         return targetBtn;
     }
+
+
+    // **** POPUP VIEW MORE ****
+    activatePopup() {
+        const btns = document.querySelectorAll('.products__item-more');
+        btns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const target = e.currentTarget;
+                const id = target.dataset.id;
+                this.fillPopupContent(id);
+                this.showPopup();
+            })
+        })
+    }
+    //fill popup content with item info
+    fillPopupContent(id) {
+        const item = Storage.getProduct(id);
+        popupContent.innerHTML = ` <button class="popup__close">
+        <i class="fas fa-2x fa-times"></i>
+    </button>
+    <div class="popup__img-container">
+        <img class="popup__img" src="${item.image}" alt="${item.title}">
+    </div>
+    <div class="popup__descr">
+        <h2 class="popup__title">
+            ${item.title}
+        </h2>
+        <div class="popup__price">${item.price}$</div>
+        <div class="popup__color">
+            <div class="popup__color-item popup__color-item_1"></div>
+            <div class="popup__color-item popup__color-item_2"></div>
+        </div>
+        <div class="popup__text">
+            Cloud bread VHS hell of banjo bicycle rights jianbing umami mumblecore etsy 8-bit pok pok +1 wolf.
+            Vexillologist yr dreamcatcher waistcoat, authentic chillwave trust fund. Viral typewriter
+            fingerstache pinterest pork belly narwhal. Schlitz venmo everyday carry kitsch pitchfork chillwave
+            iPhone taiyaki trust fund hashtag kinfolk microdosing gochujang live-edge
+        </div>
+        <button class="btn popup__btn" data-id ="${item.id}">
+            add to cart
+        </button>
+    </div>`
+    }
+    //show popup
+    showPopup() {
+        popup.classList.add('show-popup')
+    }
 }
 
 //local storage
@@ -358,6 +407,7 @@ window.addEventListener('DOMContentLoaded', () => {
     ).then(() => {
         ui.getAddToCartButtons();
         ui.cartFunctionality();
+        ui.activatePopup();
     })
 
 
