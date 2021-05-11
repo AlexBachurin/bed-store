@@ -323,15 +323,19 @@ class UI {
         const btns = document.querySelectorAll('.products__item-more');
         btns.forEach(btn => {
             btn.addEventListener('click', (e) => {
+                //get clicked button id
                 const target = e.currentTarget;
                 const id = target.dataset.id;
+                //fill info in popup
                 this.fillPopupContent(id);
+                //show popup
                 this.showPopup();
             })
         })
     }
     //fill popup content with item info
     fillPopupContent(id) {
+        //get item by id
         const item = Storage.getProduct(id);
         popupContent.innerHTML = ` <button class="popup__close">
         <i class="fas fa-2x fa-times"></i>
@@ -363,20 +367,61 @@ class UI {
     showPopup() {
         popup.classList.add('show-popup')
     }
-    //close popup
+    //close popup functionality
     closePopupFunctionality() {
         //close on X
         popupContent.addEventListener('click', (e) => {
             const target = e.target;
             console.log(target.parentElement)
             if (target.classList.contains('popup__close') || target.parentElement.classList.contains('popup__close')) {
-                popup.classList.remove('show-popup');
+                this.closePopup();
             }
         })
         //close on outside click
         popup.addEventListener('click', (e) => {
             if (e.target.classList.contains('popup')) {
-                popup.classList.remove('show-popup')
+                this.closePopup();
+            }
+        })
+    }
+    //helper to close popup window
+    closePopup() {
+        popup.classList.remove('show-popup');
+    }
+    //add to cart from popup
+    popupAddToCart() {
+        popupContent.addEventListener('click', e => {
+            const target = e.target;
+            if (target.classList.contains('popup__btn')) {
+                const id = target.dataset.id;
+                //get item by this id
+                const item = Storage.getProduct(id);
+                let inCart = cart.find(item => item.id === id);
+                if (inCart) {
+
+                } else {
+                    const product = {
+                        ...item,
+                        amount: 1
+                    };
+                    //clear empty message
+                    if (cart.length === 0) {
+                        document.querySelector('.cart__empty').remove();
+                    }
+                    //put into cart
+                    cart.push(product);
+                    //update local storage
+                    Storage.saveCart(cart);
+                    //update values
+                    this.setCartValues(cart);
+                    //add html of item in cart
+                    this.addCartItem(product);
+                    //close popup
+                    this.closePopup();
+                    //show cart
+                    this.showCart();
+                }
+
             }
         })
     }
@@ -426,6 +471,7 @@ window.addEventListener('DOMContentLoaded', () => {
         ui.cartFunctionality();
         ui.activatePopup();
         ui.closePopupFunctionality();
+        ui.popupAddToCart();
     })
 
 
