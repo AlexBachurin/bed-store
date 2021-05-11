@@ -1,0 +1,72 @@
+@media screen and ( max-width: 1200px )
+    .container
+        max-width: 960px
+
+@media screen and ( max-width: 991px )
+    .container
+        max-width: 720px
+
+@media screen and ( max-width: 767px )
+    .container
+        max-width: 540px
+    .popup
+        &__content
+            grid-template-columns: 1fr
+            grid-column-gap: 0
+            text-align: center
+            height: 100%
+            padding-top: 50px
+        &__title
+            margin-bottom: 10px
+            margin-top: 10px
+        &__price
+            margin-bottom: 10px
+        &__color
+            margin: 0 auto
+            margin-bottom: 10px
+        &__close
+            top: 5px
+            right: 15px
+        &__btn
+            margin: 0 auto
+            
+    .cart
+        width: 100vw
+    .products
+        &-container
+            padding: 0 10px
+
+@media screen and ( max-width: 575px )
+    .container
+        max-width: 100%
+    .promo
+        &_container
+            padding: 0
+        &__title
+            font-size: 4rem
+    .products
+        &-container
+            grid-template-columns: 320px
+            justify-content: center
+        &__item
+            &-imgContainer
+                max-width: 320px
+                display: flex
+                justify-content: center
+            &-img
+                margin: 0 auto
+    .cart
+        min-width: 360px
+        padding: 0
+        padding-top: 30px
+        &-overlay
+            transform: translateX(120%)
+        &__item
+            &-descr
+                grid-template-columns: 100px
+                grid-template-rows: 35px
+                grid-auto-rows: 20px
+                grid-row-gap: 3px
+    .popup
+        &__content
+            overflow: scroll

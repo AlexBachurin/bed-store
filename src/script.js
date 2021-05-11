@@ -97,7 +97,6 @@ class UI {
             }
             btn.addEventListener('click', (e) => {
                 const target = e.currentTarget;
-                console.log(target)
                 target.textContent = "In Cart";
                 target.disabled = true;
                 //get product from local storage             
@@ -210,7 +209,6 @@ class UI {
         })
         //close cart on outside click
         cartOverlay.addEventListener('click', (e) => {
-            console.log(e.target)
             if (e.target.classList.contains('cart-overlay')) {
                 this.closeCart();
             }
@@ -317,7 +315,6 @@ class UI {
     getTargetButton(id) {
         //find button by matching data attribute id
         const targetBtn = addToCartButtons.find(item => item.dataset.id === id);
-        console.log(targetBtn)
         return targetBtn;
     }
 
@@ -374,16 +371,12 @@ class UI {
         </button>
     </div>`
     }
-    //show popup
-    showPopup() {
-        popup.classList.add('show-popup')
-    }
+    
     //close popup functionality
     closePopupFunctionality() {
         //close on X
         popupContent.addEventListener('click', (e) => {
             const target = e.target;
-            console.log(target.parentElement)
             if (target.classList.contains('popup__close') || target.parentElement.classList.contains('popup__close')) {
                 this.closePopup();
             }
@@ -395,9 +388,15 @@ class UI {
             }
         })
     }
+    //show popup
+    showPopup() {
+        popup.classList.add('show-popup');
+        document.body.style.overflow = 'hidden';
+    }
     //helper to close popup window
     closePopup() {
         popup.classList.remove('show-popup');
+        document.body.style.overflow = '';
     }
     //add to cart from popup
     popupAddToCart() {
