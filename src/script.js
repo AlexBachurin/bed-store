@@ -87,7 +87,7 @@ class UI {
             //get button id
             const id = btn.getAttribute('data-id');
             //check if item with this id in cart for each button
-            let isInCart = cart.find(item => item.id === id);
+            let isInCart = this.findItemInCart(id);
             //check if item is already in cart, then disable it
             if (isInCart) {
                 //if its in cart change text and disable button
@@ -126,6 +126,10 @@ class UI {
 
 
         })
+    }
+    //find item in cart
+    findItemInCart(id) {
+        return cart.find(item => item.id === id);
     }
     //set values
     setCartValues(cart) {
@@ -230,7 +234,7 @@ class UI {
             //***AMOUNT **** manipulations
             else if (target.classList.contains('cart__item-btn_add')) {
 
-                let cartItem = cart.find(item => item.id === id);
+                let cartItem = this.findItemInCart(id);
                 let amount = cartItem.amount;
                 amount++;
                 this.changeAmount(id, amount);
@@ -238,7 +242,7 @@ class UI {
                 target.nextElementSibling.textContent = amount;
             } else if (target.classList.contains('cart__item-btn_sub')) {
                 //find matching item and get its current amount
-                let cartItem = cart.find(item => item.id === id);
+                let cartItem = this.findItemInCart(id);
                 let amount = cartItem.amount;
                 if (amount != 1) {
                     amount--;
@@ -340,7 +344,7 @@ class UI {
         //filler text , change if item is in cart already
         let text = 'Add to cart';
         //if item with this index is in cart, we change text of button to 'In Cart'
-        let inCart = cart.find(item => item.id === id);
+        let inCart = this.findItemInCart(id);
         if (inCart) {
             text = 'In cart';
         }
@@ -404,7 +408,7 @@ class UI {
                 //get item by this id
                 const item = Storage.getProduct(id);
                 //if item is already in cart, we wont add to cart any more items
-                let inCart = cart.find(item => item.id === id);
+                let inCart = this.findItemInCart(id);
                 if (inCart) {
 
                 } else {
