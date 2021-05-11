@@ -83,41 +83,42 @@ class UI {
             const id = btn.getAttribute('data-id');
             //check if item with this id in cart for each button
             let isInCart = cart.find(item => item.id === id);
+            //check if item is already in cart, then disable it
             if (isInCart) {
                 //if its in cart change text and disable button
                 btn.textContent = "In Cart";
                 btn.disabled = true;
                 // else add functionality
-            } else {
-                btn.addEventListener('click', (e) => {
-                    const target = e.currentTarget;
-                    console.log(target)
-                    target.textContent = "In Cart";
-                    target.disabled = true;
-                    //get product from local storage             
-                    let product = Storage.getProduct(id);
-                    //use spread to setup new cartItem
-                    let cartItem = {
-                        ...product,
-                        amount: 1
-                    }
-                    //clear empty message
-                    if (cart.length === 0) {
-                        document.querySelector('.cart__empty').remove();
-                    }
-
-                    //add product to the cart
-                    cart.push(cartItem);
-                    //save cart in local storage
-                    Storage.saveCart(cart);
-                    //set cart items amount
-                    this.setCartValues(cart);
-                    //display cart item
-                    this.addCartItem(cartItem);
-                    //show cart
-                    this.showCart();
-                })
             }
+            btn.addEventListener('click', (e) => {
+                const target = e.currentTarget;
+                console.log(target)
+                target.textContent = "In Cart";
+                target.disabled = true;
+                //get product from local storage             
+                let product = Storage.getProduct(id);
+                //use spread to setup new cartItem
+                let cartItem = {
+                    ...product,
+                    amount: 1
+                }
+                //clear empty message
+                if (cart.length === 0) {
+                    document.querySelector('.cart__empty').remove();
+                }
+
+                //add product to the cart
+                cart.push(cartItem);
+                //save cart in local storage
+                Storage.saveCart(cart);
+                //set cart items amount
+                this.setCartValues(cart);
+                //display cart item
+                this.addCartItem(cartItem);
+                //show cart
+                this.showCart();
+            })
+
 
         })
     }
@@ -229,7 +230,7 @@ class UI {
                 amount++;
                 this.changeAmount(id, amount);
                 //show in html
-                target.nextElementSibling.textContent = amount;               
+                target.nextElementSibling.textContent = amount;
             } else if (target.classList.contains('cart__item-btn_sub')) {
                 //find matching item and get its current amount
                 let cartItem = cart.find(item => item.id === id);
@@ -244,7 +245,7 @@ class UI {
         })
     }
     //change item amount
-    changeAmount(id,amount) {
+    changeAmount(id, amount) {
         //find matching item in cart and change its amount
         cart = cart.map(item => {
             if (item.id === id) {
@@ -297,7 +298,7 @@ class UI {
         //remove target button disabled button state
         const button = this.getTargetButton(id);
         button.disabled = false;
-        button.innerHTML= ` <i class="fas fa-shopping-cart"></i>
+        button.innerHTML = ` <i class="fas fa-shopping-cart"></i>
         add to cart`;
     }
     //get matching button
