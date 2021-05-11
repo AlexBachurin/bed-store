@@ -363,6 +363,23 @@ class UI {
     showPopup() {
         popup.classList.add('show-popup')
     }
+    //close popup
+    closePopupFunctionality() {
+        //close on X
+        popupContent.addEventListener('click', (e) => {
+            const target = e.target;
+            console.log(target.parentElement)
+            if (target.classList.contains('popup__close') || target.parentElement.classList.contains('popup__close')) {
+                popup.classList.remove('show-popup');
+            }
+        })
+        //close on outside click
+        popup.addEventListener('click', (e) => {
+            if (e.target.classList.contains('popup')) {
+                popup.classList.remove('show-popup')
+            }
+        })
+    }
 }
 
 //local storage
@@ -408,6 +425,7 @@ window.addEventListener('DOMContentLoaded', () => {
         ui.getAddToCartButtons();
         ui.cartFunctionality();
         ui.activatePopup();
+        ui.closePopupFunctionality();
     })
 
 
