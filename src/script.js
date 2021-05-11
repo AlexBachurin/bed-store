@@ -210,7 +210,7 @@ class UI {
 
     // **** CART FUNCTIONALITY ****
     cartFunctionality() {
-        //clear cart
+        // **** CLEAR ALL ITEMS ****
         clearCartBtn.addEventListener('click', () => {
             this.clearCart();
         })
@@ -218,7 +218,7 @@ class UI {
         cartContent.addEventListener('click', (e) => {
             const target = e.target;
             const id = target.dataset.id;
-            //remove item
+            // **** REMOVE ITEM ****
             if (target.classList.contains('cart__item-remove')) {
                 this.removeItem(id);
             }
@@ -258,6 +258,7 @@ class UI {
         //calculate new price
         this.setCartValues(cart)
     }
+    // ***CLEAR ALL***
     clearCart() {
         //clear html content
         cartContent.innerHTML = '';
@@ -277,6 +278,7 @@ class UI {
         //close cart
         this.closeCart();
     }
+
     //remove item
     removeItem(id) {
         //get all cart items but item which id we wanna remove
@@ -301,6 +303,7 @@ class UI {
         button.innerHTML = ` <i class="fas fa-shopping-cart"></i>
         add to cart`;
     }
+
     //get matching button
     getTargetButton(id) {
         //find button by matching data attribute id
@@ -348,6 +351,7 @@ window.addEventListener('DOMContentLoaded', () => {
             Storage.saveProducts(data);
         }
         //once we get products we setting up function for buttons
+        //and cart functionality(remove,increase/decrease amount/clear all items)
     ).then(() => {
         ui.getAddToCartButtons();
         ui.cartFunctionality();
