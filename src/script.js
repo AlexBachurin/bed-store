@@ -431,6 +431,10 @@ class UI {
                     this.closePopup();
                     //show cart
                     this.showCart();
+                    //change product button state
+                    const button = this.getTargetButton(id);
+                    button.textContent = 'In Cart';
+                    button.disabled = true;
                 }
 
             }
