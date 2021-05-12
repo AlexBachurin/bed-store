@@ -1,5 +1,14 @@
-//select items
+//data
+const client = contentful.createClient({
+    // This is the space ID. A space is like a project folder in Contentful terms
+    space: "ok8noypnlu1q",
+    // This is the access token for this space. Normally you get both ID and the token in the Contentful web app
+    accessToken: "DGqfx2s2u2aU5hBfXcnorHKSJG49PAHbWxQWJpDSIqk"
+});
 
+
+
+//select items
 const cartBtn = document.querySelector('.nav__cart'),
     closeCartBtn = document.querySelector('.cart__close'),
     clearCartBtn = document.querySelector('.cart__clearBtn'),
@@ -21,29 +30,40 @@ let addToCartButtons = [];
 
 //getting products
 class Products {
-    async getProducts(url) {
-        const res = await fetch(url);
-        const data = await res.json();
-        //destructuring to readable format
-        let products = data.items;
-        products = products.map((item) => {
-            const {
-                title,
-                price
-            } = item.fields;
-            const {
-                id
-            } = item.sys;
-            const image = item.fields.image.fields.file.url;
-            //return each item as object in much more readable format
-            return {
-                title,
-                price,
-                id,
-                image
-            }
-        })
-        return products;
+    async getProducts() {
+        try {
+            let contentful = await client.getEntries({
+                content_type: 'comfyHouseStore'
+            });
+            
+
+            // const res = await fetch(url);
+            // const data = await res.json();
+            //destructuring to readable format
+            let products = contentful.items;
+            products = products.map((item) => {
+                const {
+                    title,
+                    price
+                } = item.fields;
+                const {
+                    id
+                } = item.sys;
+                const image = item.fields.image.fields.file.url;
+                //return each item as object in much more readable format
+                return {
+                    title,
+                    price,
+                    id,
+                    image
+                }
+            })
+            return products;
+            
+        } catch (error) {
+            console.log(error);
+        }
+        
     }
 }
 
@@ -371,7 +391,7 @@ class UI {
         </button>
     </div>`
     }
-    
+
     //close popup functionality
     closePopupFunctionality() {
         //close on X
