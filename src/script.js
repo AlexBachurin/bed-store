@@ -36,7 +36,7 @@ class Products {
             let contentful = await client.getEntries({
                 content_type: 'comfyHouseStore'
             });
-            
+
             // const res = await fetch(url);
             // const data = await res.json();
             //destructuring to readable format
@@ -62,11 +62,11 @@ class Products {
                 }
             })
             return products;
-            
+
         } catch (error) {
             console.log(error);
         }
-        
+
     }
 }
 
@@ -96,33 +96,35 @@ class UI {
     }
     // category buttons functionality
     categoryBtnsFunctionality() {
-        category.addEventListener('click', (e) => {
-            const target = e.target;
-            //get clicked element category
-            const category = target.dataset.category;
-            //get all products from storage
-            let products = Storage.getAllProducts();
-            //check if category is All, display all products
-            if (category === 'All') {
-                this.displayProducts(products);
-                //activate addtocart buttons and popup buttons
-                this.getAddToCartButtons();
-                this.activatePopup();
-            //else display items with clicked category
-            } else {
-                products = products.filter(item => item.category === category);
-                this.displayProducts(products);
-                this.getAddToCartButtons();
-                this.activatePopup();
-            }
-            //give active class to active button
-            const btns = document.querySelectorAll('.products__category-btn');
-            btns.forEach(btn => {
-                btn.classList.remove('active-category');
+        const btns = document.querySelectorAll('.products__category-btn');
+        btns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const target = e.target;
+                //get clicked element category
+                const category = target.dataset.category;
+                //get all products from storage
+                let products = Storage.getAllProducts();
+                //check if category is All, display all products
+                if (category === 'All') {
+                    this.displayProducts(products);
+                    //activate addtocart buttons and popup buttons
+                    this.getAddToCartButtons();
+                    this.activatePopup();
+                    //else display items with clicked category
+                } else {
+                    products = products.filter(item => item.category === category);
+                    this.displayProducts(products);
+                    this.getAddToCartButtons();
+                    this.activatePopup();
+                }
+                //give active class to active button
+                btns.forEach(btn => {
+                    btn.classList.remove('active-category');
+                })
+                target.classList.add('active-category')
             })
-            target.classList.add('active-category')
-            
         })
+
     }
     //display products
     displayProducts(products) {
@@ -534,7 +536,7 @@ class Storage {
     }
     //get all products
     static getAllProducts() {
-        let products =  JSON.parse(localStorage.getItem('products'))
+        let products = JSON.parse(localStorage.getItem('products'))
         return products;
     }
     //save items to cart
