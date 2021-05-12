@@ -20,7 +20,8 @@ const cartBtn = document.querySelector('.nav__cart'),
     cartTotalPrice = document.querySelector('.cart-total'),
     productsContent = document.querySelector('.products-container'),
     popup = document.querySelector('.popup'),
-    popupContent = document.querySelector('.popup__content');
+    popupContent = document.querySelector('.popup__content'),
+    category = document.querySelector('.products__category');
 
 // main info for cart
 let cart = [];
@@ -36,15 +37,16 @@ class Products {
                 content_type: 'comfyHouseStore'
             });
             
-
             // const res = await fetch(url);
             // const data = await res.json();
             //destructuring to readable format
             let products = contentful.items;
+            console.log(products)
             products = products.map((item) => {
                 const {
                     title,
-                    price
+                    price,
+                    category
                 } = item.fields;
                 const {
                     id
@@ -54,6 +56,7 @@ class Products {
                 return {
                     title,
                     price,
+                    category,
                     id,
                     image
                 }
@@ -69,6 +72,58 @@ class Products {
 
 // display content
 class UI {
+    // **** CATEGORY ****
+    //get categories
+    getUniqCategories(products) {
+        //get categories
+        const category = products.map(item => item.category);
+        //get only unique categories
+        const uniqCategory = [...new Set(category)];
+        console.log(uniqCategory)
+        return uniqCategory
+    }
+    //display categories
+    displayCategories(products) {
+        let result = `<button class="btn products__category-btn" data-category="All"> All </button>`;
+        const uniqCategory = this.getUniqCategories(products);
+        uniqCategory.forEach(item => {
+            result += `<button class="btn products__category-btn" data-category="${item}">
+                    ${item}
+                </button>
+            `
+        })
+        category.innerHTML = result;
+    }
+    // category buttons functionality
+    categoryBtnsFunctionality() {
+        category.addEventListener('click', (e) => {
+            const target = e.target;
+            //get clicked element category
+            const category = target.dataset.category;
+            //get all products from storage
+            let products = Storage.getAllProducts();
+            //check if category is All, display all products
+            if (category === 'All') {
+                this.displayProducts(products);
+                //activate addtocart buttons and popup buttons
+                this.getAddToCartButtons();
+                this.activatePopup();
+            //else display items with clicked category
+            } else {
+                products = products.filter(item => item.category === category);
+                this.displayProducts(products);
+                this.getAddToCartButtons();
+                this.activatePopup();
+            }
+            //give active class to active button
+            const btns = document.querySelectorAll('.products__category-btn');
+            btns.forEach(btn => {
+                btn.classList.remove('active-category');
+            })
+            target.classList.add('active-category')
+            
+        })
+    }
     //display products
     displayProducts(products) {
         let result = '';
@@ -326,9 +381,11 @@ class UI {
         }
         //remove target button disabled button state
         const button = this.getTargetButton(id);
-        button.disabled = false;
-        button.innerHTML = ` <i class="fas fa-shopping-cart"></i>
-        add to cart`;
+        if (button) {
+            button.disabled = false;
+            button.innerHTML = ` <i class="fas fa-shopping-cart"></i>
+            add to cart`;
+        }
     }
 
     //get matching button
@@ -475,6 +532,11 @@ class Storage {
         let product = products.find(item => item.id === id);
         return product;
     }
+    //get all products
+    static getAllProducts() {
+        let products =  JSON.parse(localStorage.getItem('products'))
+        return products;
+    }
     //save items to cart
     static saveCart(cartArr) {
         localStorage.setItem('cart', JSON.stringify(cartArr));
@@ -500,6 +562,7 @@ window.addEventListener('DOMContentLoaded', () => {
         (data) => {
             ui.displayProducts(data);
             Storage.saveProducts(data);
+            ui.displayCategories(data);
         }
         //once we get products we setting up function for buttons
         //and cart functionality(remove,increase/decrease amount/clear all items)
@@ -509,6 +572,7 @@ window.addEventListener('DOMContentLoaded', () => {
         ui.activatePopup();
         ui.closePopupFunctionality();
         ui.popupAddToCart();
+        ui.categoryBtnsFunctionality();
     })
 
 

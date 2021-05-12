@@ -2,6 +2,7 @@
     display: grid
     place-items: center
     padding-top: 3rem
+    padding-bottom: 100px
     &__title
         text-align: center
         font-family: 'Kaushan Script', cursive
@@ -83,4 +84,14 @@
             display: none
             &:hover
                 background-color: #B27300
+    &__category
+        max-width: 740px
+        margin-top: 30px
+        display: flex
+        justify-content: space-between
+
+.active-category
+        background-color: transparent
+        color: var(--primary)
+        border: 1px solid var(--black)
 
