@@ -41,7 +41,6 @@ class Products {
             // const data = await res.json();
             //destructuring to readable format
             let products = contentful.items;
-            console.log(products)
             products = products.map((item) => {
                 const {
                     title,
@@ -79,7 +78,6 @@ class UI {
         const category = products.map(item => item.category);
         //get only unique categories
         const uniqCategory = [...new Set(category)];
-        console.log(uniqCategory)
         return uniqCategory
     }
     //display categories
